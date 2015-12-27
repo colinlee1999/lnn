@@ -145,7 +145,7 @@ lnn <- function(E_Set, t_pi_prior = c(0.33, 0.33, 0.34), k_prior = 1, b = c(2,2,
       
       d_lambda = sum(tilde_z[,category] * alpha * (nu + digamma(n/2+alpha) - digamma(alpha))) - alpha * ( sum(tilde_z[,category] * log(A * (mu_0 - B_g)^2 + C_g)) )
       
-      d_nu = sum(tilde_z[,category]) * alpha - beta * (n/2 + alpha) *  (sum(tilde_z[,category] / (A * (mu_0 - B_g)^2 + C_g)))
+      d_nu = sum(tilde_z[,category]) * alpha - beta * (n/2 + alpha) * (sum(tilde_z[,category] / (A * (mu_0 - B_g)^2 + C_g)))
       
       gradient_temp[,category] = c(d_delta, d_k, d_lambda, d_nu)
     }
@@ -200,17 +200,22 @@ lnn <- function(E_Set, t_pi_prior = c(0.33, 0.33, 0.34), k_prior = 1, b = c(2,2,
 
   temp = median(sort(median_dgl_by_l)[(ceiling(G * 0.95)):G])
   if (temp>0) delta_1 = log(temp)
-  else delta_1 = delta_1_min
+  else delta_1 = delta_min
 
   temp = median(sort(median_dgl_by_l)[1:(trunc(G * 0.05))])
   if (temp<0) delta_2 = log(-temp)
-  else delta_2 = delta_2_min
+  else delta_2 = delta_min
+
+  temp_tau = 1 / (apply(data, 1, mad)^2)
+  omega = mad(median_dgl_by_l)^2
+
+  k_prior = omega * median(temp_tau)
 
   k_1 = k_prior
   k_2 = k_prior
   k_3 = k_prior
 
-  temp_tau = 1 / (apply(data, 1, mad)^2)
+  
   lambda_1 = log((median(temp_tau)^2)/(mad(temp_tau)^2))
   lambda_2 = lambda_1
   lambda_3 = lambda_1
@@ -238,7 +243,7 @@ lnn <- function(E_Set, t_pi_prior = c(0.33, 0.33, 0.34), k_prior = 1, b = c(2,2,
   ####-----------For Test Use Only-------------------------------------------####
   ###############################################################################
 
-  # focus = 5
+  # focus = 1
   # h = 0.0001
 
   # psi[focus] = psi[focus] - h

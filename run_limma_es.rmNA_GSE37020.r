@@ -29,10 +29,10 @@ positive_data_tau_g = 1 / (apply(positive_data, 1, mad)^2)
 negative_data_tau_g = 1 / (apply(negative_data, 1, mad)^2)
 neutral_data_tau_g = 1 / (apply(neutral_data, 1, mad)^2)
 
-par(mfrow=c(3,1))
-hist(log10(positive_data_tau_g), xlim=c(0,5))
-hist(log10(negative_data_tau_g), xlim=c(0,5))
-hist(log10(neutral_data_tau_g), xlim=c(0,5))
+# par(mfrow=c(3,1))
+# hist(log10(positive_data_tau_g), xlim=c(0,5))
+# hist(log10(negative_data_tau_g), xlim=c(0,5))
+# hist(log10(neutral_data_tau_g), xlim=c(0,5))
 
 # hist of k by cluster
 positive_data_mu_g = apply(positive_data, 1, median)
@@ -47,9 +47,9 @@ positive_data_k = positive_data_mu_g_var * positive_data_tau_g
 negative_data_k = negative_data_mu_g_var * negative_data_tau_g
 neutral_data_k = neutral_data_mu_g_var * neutral_data_tau_g
 
-hist(log10(positive_data_k), xlim=c(0,3))
-hist(log10(negative_data_k), xlim=c(0,3))
-hist(log10(neutral_data_k), xlim=c(0,3))
+# hist(log10(positive_data_k), xlim=c(0,3))
+# hist(log10(negative_data_k), xlim=c(0,3))
+# hist(log10(neutral_data_k), xlim=c(0,3))
 
 num_positive = nrow(positive_data)
 num_negative = nrow(negative_data)
